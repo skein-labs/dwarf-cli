@@ -15,34 +15,36 @@ Built in Rust with [candle](https://github.com/huggingface/candle) for inference
 
 ## Install
 
+### Quick install
+
+```bash
+git clone https://github.com/skein-labs/dwarf-cli.git
+cd dwarf-cli
+./setup.sh      # downloads the model from HuggingFace
+./install.sh    # builds and installs dwarf to ~/.local/bin
+```
+
+Then open a new terminal or `source ~/.bashrc` and you're ready to go.
+
 ### Requirements
 
 - Rust 1.70+
-- The Dwarf-15M model weights ([download from HuggingFace](https://huggingface.co/ThingAI/Dwarf-15M))
+- ~60MB disk space for model weights
 
-### Build
+### Manual install
+
+If you prefer to do it yourself:
 
 ```bash
-git clone https://github.com/ThingsAI/dwarf-cli.git
-cd dwarf-cli
 cargo build --release
+cp target/release/dwarf ~/.local/bin/
 ```
 
-The binary will be at `target/release/dwarf`.
-
-### Model setup
-
-Place the model files (`model.safetensors`, `config.json`, `tokenizer.json`) in one of these locations (checked in order):
+The model files (`model.safetensors`, `config.json`, `tokenizer.json`) are loaded from the first path found:
 
 1. `./model/` — relative to where you run `dwarf`
 2. `$DWARF_MODEL_DIR` — custom path via environment variable
-3. `~/.dwarf/model/` — default home directory location
-
-```bash
-# Example: download to ~/.dwarf/model
-mkdir -p ~/.dwarf/model
-# Copy or symlink model.safetensors, config.json, tokenizer.json there
-```
+3. `~/.dwarf/model/` — default location (used by `setup.sh`)
 
 ## Usage
 
